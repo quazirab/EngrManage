@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='bootstrap.min.3.4.0.css') }}">
+        <script src="{{ url_for('static', filename='jquery.min.3.4.1.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap.min.3.4.0.js') }}"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/main.css') }}">
+        <title>Engr Manage - {{title}}</title>
+        
+    </head>
+
+    <header>
+      {% if current_user.is_authenticated %}
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            
+            <div class="navbar-header">
+              <span class="navbar-brand" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+              <a class="navbar-brand" href="{{ url_for('home')}}">Engr Manage</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="{{ url_for('account')}}">Account</a></li>
+              <li><a href="{{ url_for('logout')}}">logout</a></li>
+            </ul>
+          </div>
+        </nav>
+      {% else %}
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              
+              <div class="navbar-header">
+                <a class="navbar-brand" href="{{ url_for('home')}}">Engr Manage</a>
+              </div>
+            </div>
+          </nav>
+      {% endif %}
+    </header>
+
+    <body>
+            <!-- Navigation Bar -->
+            <div id="mySidenav" class="sidenav">
+              <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
+              <a href="{{url_for('projects')}}">Projects</a>
+              {% for role in current_user.roles %}
+                {% if role.tag == 'Admin' %}
+                  <a href="{{url_for('adminstration')}}">Admistration</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            
+            
+
+            <!-- Main Container -->
+            <main role="main" class="container" onclick="closeNav()">
+                <div class="row">
+                  <div class="col-md-8">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        {% for category, message in messages %}
+                          <div class="alert alert-{{ category }}">
+                            {{ message }}
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
+                    
+                    <!-- Shared Container -->
+                    {% block content %}{% endblock %}
+                </div>
+              
+              <!-- Script for Navigation -->
+              <script>
+                function openNav() {
+                  document.getElementById("mySidenav").style.width = "200px";
+                }
+                  
+                function closeNav() {
+                  document.getElementById("mySidenav").style.width = "0";
+                }
+
+              </script>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for roles in current_user.roles %}
+    {{roles.tag}}
+{% endfor %}
+{% endblock content %}

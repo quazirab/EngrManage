@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Edit User</legend>
+        <div class="form-group">
+            {{ form.username.label(class="form-control-label") }}
+            {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.username(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <select multiple name="user_role" class="form-control">
+                {% for role in roles %}
+                  {% if role in user_roles %}
+                  <option value = "{{role.tag}}" selected>{{role.tag}}</option>
+                  {% else %}
+                  <option value = "{{role.tag}}" >{{role.tag}}</option>
+                  {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </fieldset>
+    
+</form>
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- {{current_user.roles}} -->
+
+
+<table class="table table-hover">
+    <tbody>
+      <tr class='clickable-row' data-href="{{url_for('adminstration_adduser')}}"}>
+        <td>
+          <h4><b>
+            Add User
+          </b></h1>
+          <p><i>
+            Add new users and assign privileges to use the application.
+          </i></p>
+        </td>
+      </tr>
+      <tr class='clickable-row' data-href="{{url_for('adminstration_addusergroup')}}">
+          <td>
+            <h4><b>
+              Add User Group
+            </b></h1>
+            <p><i>
+              Add new groups for users 
+            </i></p>
+          </td>
+      </tr>
+      <tr class='clickable-row' data-href="{{url_for('adminstration_userlist')}}">
+          <td>
+            <h4><b>
+              User List
+            </b></h1>
+            <p><i>
+              Vew all the users and User Roles
+            </i></p>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.location = $(this).data("href");
+      });
+    });
+  </script>
+
+{% endblock content %}
