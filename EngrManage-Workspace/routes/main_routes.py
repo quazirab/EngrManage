@@ -5,11 +5,6 @@ from EngrManage.models import User,Role,db
 from flask_login import login_user,current_user,logout_user,login_required
 from EngrManage.routes import bcrypt
 
-#====================Logger========================
-import logging
-logger = logging.getLogger(__name__)
-#====================Logger========================
-
 @app.route("/")
 @app.route("/home")
 def home():

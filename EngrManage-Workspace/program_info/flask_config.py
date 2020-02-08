@@ -1,7 +1,3 @@
-#====================Logger========================
-import logging
-logger = logging.getLogger(__name__)
-#====================Logger========================
 from EngrManage import app
 from EngrManage.program_info.setup_info import info
 
