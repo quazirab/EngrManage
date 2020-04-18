@@ -1,6 +1,6 @@
 from flask_login import LoginManager
-from EngrManage import app
-from EngrManage.models import User,db
+from EngrManage_WS import app
+from EngrManage_WS.models import User,db
 
 #====================Logger========================
 import logging

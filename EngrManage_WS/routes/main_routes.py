@@ -1,9 +1,9 @@
 from flask import render_template,url_for,flash,redirect,request
-from EngrManage import app
-from EngrManage.forms import LoginForm,RegistrationForm
-from EngrManage.models import User,Role,db
+from EngrManage_WS import app
+from EngrManage_WS.forms import LoginForm,RegistrationForm
+from EngrManage_WS.models import User,Role,db
 from flask_login import login_user,current_user,logout_user,login_required
-from EngrManage.routes import bcrypt
+from EngrManage_WS.routes import bcrypt
 
 @app.route("/")
 @app.route("/home")
@@ -26,8 +26,10 @@ def first_administrator():
     elif form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         admin = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        role = Role.query.filter_by(tag='Admin').first()
         
+        role = Role.query.filter_by(tag='Admin').first()
+        # role = Role(tag='Admin')
+
         admin.roles.append(role)
         db.session.add(admin)
         db.session.commit()
@@ -55,9 +57,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
-
-@app.route("/account")
-@login_required
-def account():
-    return render_template('account.html', title='Account')

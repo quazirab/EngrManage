@@ -4,7 +4,7 @@ from datetime import datetime
 import logging
 logger = logging.getLogger(__name__)
 #====================Logger========================
-from EngrManage.models import db
+from EngrManage_WS.models import db
 
 class User(db.Model,UserMixin):
     __tablename__ = 'users'

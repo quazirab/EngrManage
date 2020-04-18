@@ -1,15 +1,11 @@
 from flask import render_template,url_for,flash,redirect,request,Blueprint
 from flask_bcrypt import Bcrypt
-from EngrManage import app
-from EngrManage.forms import AddUserForm,AddUserGroup,EditUser
-from EngrManage.models import User,Role,db
+from EngrManage_WS import app
+from EngrManage_WS.forms import AddUserForm,AddUserGroup,EditUser
+from EngrManage_WS.models import User,Role,db
 from flask_login import login_user,current_user,logout_user,login_required
-from EngrManage.special_functions import login_role_required
-from EngrManage.routes import bcrypt
-#====================Logger========================
-import logging
-logger = logging.getLogger(__name__)
-#====================Logger========================
+from EngrManage_WS.special_functions import login_role_required
+from EngrManage_WS.routes import bcrypt
 
 @app.route("/adminstration")
 @login_role_required(roles=['Admin'])

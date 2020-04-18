@@ -1,13 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField 
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from EngrManage.models import User,Role
-
-#====================Logger========================
-import logging
-logger = logging.getLogger(__name__)
-#====================Logger========================
-
+from EngrManage_WS.models import User,Role
 
 class AddUserForm(FlaskForm):
     username = StringField('Username',

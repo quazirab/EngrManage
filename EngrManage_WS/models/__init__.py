@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import logging
 logger = logging.getLogger(__name__)
 #====================Logger========================
-from EngrManage import app
+from EngrManage_WS import app
 db = SQLAlchemy(app)
 
-from EngrManage.models.user_model import User,Role,UserRoles
-from EngrManage.models.project_model import Project,Client,Invoice,PO,BOM,ProjectClients,ProjectVendors
+from EngrManage_WS.models.user_model import User,Role,UserRoles
+from EngrManage_WS.models.project_model import Project,Client,Invoice,PO,BOM,ProjectClients,ProjectVendors

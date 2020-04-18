@@ -1,14 +1,14 @@
-from EngrManage import app
-from EngrManage.program_info.setup_info import info
+from EngrManage_WS import app
+import os
 
 class ConfigClass(object):
     """ Flask application config """
 
     # Flask settings
-    SECRET_KEY = info['app']['secret_key']
+    SECRET_KEY = os.environ['EM_SECRET']
 
     # Flask-SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost:5532/EngrManage'    # File-based SQL database
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+os.path.join(os.environ['EM_DBDIR'],"engrmanage.db")   # File-based SQL database
     SQLALCHEMY_TRACK_MODIFICATIONS = False    # Avoids SQLAlchemy warning
 
     # Flask-Mail SMTP server settings

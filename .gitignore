@@ -1,8 +1,13 @@
-*.log
-*.pyc
-/bin/
-envr/
-envr-*
-debug/
+# Workspace
 .vscode/
-*_debug.*
+*.code-workspace
+
+# Python
+*.pyc
+venv/
+__pycache__/
+
+# Debug
+debug/
+
+# Project
