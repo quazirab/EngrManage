@@ -1,10 +1,12 @@
-from flask import render_template,request,flash
-from EngrManage_WS import app
-from EngrManage_WS.forms import UpdateAccountForm
+from flask import render_template,request,flash,Blueprint
+from EngrManage_WS.account.forms import UpdateAccountForm
 from flask_login import login_required, current_user
-from EngrManage_WS.models import db
+from EngrManage_WS import db
 
-@app.route("/account",methods=['GET', 'POST'])
+
+account_blueprint = Blueprint('account', __name__,template_folder='templates')
+
+@account_blueprint.route("/account",methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
@@ -19,4 +21,4 @@ def account():
         db.session.commit()
         flash('Account Updated','success')
 
-    return render_template('account.html', title='Account',form=form)
+    return render_template('account/account.html', title='Account',form=form)

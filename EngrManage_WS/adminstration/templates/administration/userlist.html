@@ -17,7 +17,7 @@
   </thead>
 
   {% for user in users%}
-  <tr class='clickable-row' data-href="{{url_for('user_details',user_id=user.id)}}" title="Click to edit user">    
+  <tr class='clickable-row' data-href="{{url_for('adminstration.user_details',user_id=user.id)}}" title="Click to edit user">    
     <th scope="row">
       {{user.username}}
     </th>

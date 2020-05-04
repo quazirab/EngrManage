@@ -8,7 +8,7 @@
 </head>
 
 
-<a class="btn btn-primary" href="{{url_for('project_creator')}}" role="button">Create</a>
+<a class="btn btn-primary" href="{{url_for('project.project_creator')}}" role="button">Create</a>
 <hr></hr>
 <table id="selectedColumn" class="table table-hover table-striped"> 
   <thead>
@@ -20,7 +20,7 @@
 </thead>
 
 {% for project in projects%}
-<tr class='clickable-row' data-href="{{url_for('project_details',project_id=project.id)}}" title="Click to edit project">    
+<tr class='clickable-row' data-href="{{url_for('project.project_details',project_id=project.id)}}" title="Click to edit project">    
   <th scope="row">
     {{project.name}}
   </th>

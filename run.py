@@ -1,20 +1,6 @@
-import sys
-import os
+from EngrManage_WS import create_app
 
-def first_run_check():
-    if not os.path.exists(os.environ['EM_DBDIR']):
-        os.makedirs(os.environ['EM_DBDIR'])
-    if not os.path.exists(os.path.join(os.environ['EM_DBDIR'],"engrmanage.db")):
-        from EngrManage_WS.models import db,Role
-        db.create_all()
-        db.session.add(Role(tag='Admin'))
-        db.session.commit()
+app = create_app()
 
-if __name__ == "__main__":
-    # check for if 
-    first_run_check()
-
-
-    from EngrManage_WS import run
-    run()
-    
+if __name__ == '__main__':
+    app.run(debug=True)

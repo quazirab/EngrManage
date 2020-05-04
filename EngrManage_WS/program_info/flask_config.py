@@ -1,4 +1,3 @@
-from EngrManage_WS import app
 import os
 
 class ConfigClass(object):

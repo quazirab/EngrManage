@@ -1,18 +1,19 @@
 from flask import render_template,url_for,flash,redirect,request,Blueprint
-from flask_bcrypt import Bcrypt
-from EngrManage_WS import app
-from EngrManage_WS.forms import AddUserForm,AddUserGroup,EditUser
-from EngrManage_WS.models import User,Role,db
+from EngrManage_WS import bcrypt,db
+from EngrManage_WS.adminstration.forms import AddUserForm,AddUserGroup,EditUser
+from EngrManage_WS.models import User,Role
 from flask_login import login_user,current_user,logout_user,login_required
 from EngrManage_WS.special_functions import login_role_required
-from EngrManage_WS.routes import bcrypt
 
-@app.route("/adminstration")
+
+adminstration_blueprint = Blueprint('adminstration', __name__,template_folder='templates')
+
+@adminstration_blueprint.route("/adminstration")
 @login_role_required(roles=['Admin'])
 def adminstration():
-    return render_template('adminstration/home.html', title='Adminstration')
+    return render_template('administration/home.html', title='Adminstration')
 
-@app.route("/adminstration/add_user",methods=['GET', 'POST'])
+@adminstration_blueprint.route("/adminstration/add_user",methods=['GET', 'POST'])
 @login_role_required(roles=['Admin'])
 def adminstration_adduser():
     form = AddUserForm()
@@ -34,10 +35,10 @@ def adminstration_adduser():
         # Redirect to the admistration page
         return redirect(url_for('adminstration'))
 
-    return render_template('adminstration/adduser.html',roles=roles,form=form, title='Add User')
+    return render_template('administration/adduser.html',roles=roles,form=form, title='Add User')
 
 
-@app.route("/adminstration/add_user_group",methods=['GET', 'POST'])
+@adminstration_blueprint.route("/add_user_group",methods=['GET', 'POST'])
 @login_role_required(roles=['Admin'])
 def adminstration_addusergroup():
     roles = Role.query.all()
@@ -48,16 +49,16 @@ def adminstration_addusergroup():
         db.session.commit()
         flash('Role Created','success')
         return redirect(url_for('adminstration_addusergroup'))
-    return render_template('adminstration/addusergroup.html',roles=roles, form=form, title='User Group')
+    return render_template('administration/addusergroup.html',roles=roles, form=form, title='User Group')
 
-@app.route("/adminstration/user_list")
+@adminstration_blueprint.route("/user_list")
 @login_role_required(roles=['Admin'])
 def adminstration_userlist():
     users = User.query.all()
     form=AddUserForm()
-    return render_template('adminstration/userlist.html',users=users, form=form, title='User List')
+    return render_template('administration/userlist.html',users=users, form=form, title='User List')
 
-@app.route("/adminstration/user_list/<int:user_id>/details", methods=['GET', 'POST'])
+@adminstration_blueprint.route("/user_list/<int:user_id>/details", methods=['GET', 'POST'])
 @login_role_required(roles=['Admin'])
 def user_details(user_id):
     user = User.query.filter_by(id=user_id).first()
@@ -78,7 +79,7 @@ def user_details(user_id):
         db.session.commit()
         return redirect(url_for('adminstration_userlist'))
 
-    return render_template('adminstration/userdetails.html',
+    return render_template('administration/userdetails.html',
                             form=form, roles=roles, user_roles=user_roles, 
                             title='User List')
  

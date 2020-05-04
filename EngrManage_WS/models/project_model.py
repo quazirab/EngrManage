@@ -3,7 +3,7 @@ from datetime import datetime
 import logging
 logger = logging.getLogger(__name__)
 #====================Logger========================
-from EngrManage_WS.models import db
+from EngrManage_WS import db
 
 # Project Model - It is the main model, the project will be created with client(s) informantion
 # Once Project is Created, it will append the client(s) and the client_handler will keep the infornmation

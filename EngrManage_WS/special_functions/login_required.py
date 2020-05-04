@@ -1,6 +1,6 @@
 from flask import abort
 from flask_login import current_user
-from EngrManage_WS.session_manager import login_manager
+from EngrManage_WS import login_manager
 from EngrManage_WS.models import Role
 from functools import wraps
 #====================Logger========================

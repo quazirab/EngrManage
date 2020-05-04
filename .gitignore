@@ -12,3 +12,4 @@ debug/
 bin/
 
 # Project
+addEnv.sh

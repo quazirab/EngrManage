@@ -1,23 +1,23 @@
 from flask import render_template,url_for,flash,redirect,request,Blueprint
-from flask_bcrypt import Bcrypt
-from EngrManage_WS import app
-from EngrManage_WS.forms import ProjectFrom
-from EngrManage_WS.models import db, Project,User
+from EngrManage_WS.project.forms import ProjectFrom
+from EngrManage_WS.models import Project,User
 from flask_login import login_user,current_user,logout_user,login_required
 from EngrManage_WS.special_functions import login_role_required
-from EngrManage_WS.routes import bcrypt
+from EngrManage_WS import db
 #====================Logger========================
 import logging
 logger = logging.getLogger(__name__)
 #====================Logger========================
 
-@app.route("/projects")
-@login_role_required(roles=['Admin','User'])
-def projects():
-    projects = Project.query.all()
-    return render_template('project/home.html',projects = projects, title='Projects')
+project_blueprint = Blueprint('project', __name__,template_folder='templates')
 
-@app.route("/projects/create_project",methods=['GET','POST'])
+@project_blueprint.route("/project")
+@login_role_required(roles=['Admin','User'])
+def project():
+    project = Project.query.all()
+    return render_template('project/home.html',project = project, title='Project')
+
+@project_blueprint.route("/project/create_project",methods=['GET','POST'])
 @login_role_required(roles=['Admin','User'])
 def project_creator():
     form = ProjectFrom()
@@ -25,10 +25,10 @@ def project_creator():
         new_project = Project(created_by=current_user.id, name=form.name.data, description=form.description.data)
         db.session.add(new_project)
         db.session.commit()
-        return redirect(url_for('projects'))
-    return render_template('project/projectcreator.html', form=form, title='Create Projects')
+        return redirect(url_for('project'))
+    return render_template('project/projectcreator.html', form=form, title='Create Project')
 
-@app.route("/project/<int:project_id>/details", methods=['GET', 'POST'])
+@project_blueprint.route("/project/<int:project_id>/details", methods=['GET', 'POST'])
 @login_role_required(roles=['Admin'])
 def project_details(project_id):
     project = Project.query.filter_by(id=project_id).first()
