@@ -14,7 +14,7 @@ class ProjectFrom(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
     description = StringField('Description',
                         validators=[DataRequired(), Length(min=2, max=120)])
-    submit = SubmitField('save')
+    submit = SubmitField('Create')
 
     def validate_name(self,name):
         name = Project.query.filter_by(name=name.data).first()

@@ -33,7 +33,7 @@ def adminstration_adduser():
         flash('User Added','success')
 
         # Redirect to the admistration page
-        return redirect(url_for('adminstration'))
+        return redirect(url_for('adminstration.adminstration'))
 
     return render_template('administration/adduser.html',roles=roles,form=form, title='Add User')
 
@@ -48,7 +48,7 @@ def adminstration_addusergroup():
         db.session.add(role)
         db.session.commit()
         flash('Role Created','success')
-        return redirect(url_for('adminstration_addusergroup'))
+        return redirect(url_for('adminstration.adminstration_addusergroup'))
     return render_template('administration/addusergroup.html',roles=roles, form=form, title='User Group')
 
 @adminstration_blueprint.route("/user_list")
@@ -77,7 +77,7 @@ def user_details(user_id):
         new_user_role = [Role.query.filter_by(tag=tag).first() for tag in request.form.getlist('user_role')]
         user.roles = new_user_role
         db.session.commit()
-        return redirect(url_for('adminstration_userlist'))
+        return redirect(url_for('adminstration.adminstration_userlist'))
 
     return render_template('administration/userdetails.html',
                             form=form, roles=roles, user_roles=user_roles, 
@@ -89,4 +89,4 @@ def delete_user(username):
     user = User.query.filter_by(username=username).first()
     user.delete()
     db.session.commit()
-    return redirect(url_for('adminstration_userlist'))
+    return redirect(url_for('adminstration.adminstration_userlist'))
