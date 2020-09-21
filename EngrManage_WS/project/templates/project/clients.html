@@ -1,6 +1,3 @@
-{% extends "layout.html" %}
-{% block content %}
-
 <head>
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/datatable.css') }}">>
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -20,7 +17,6 @@
       </div>
       <div class="modal-body">
         <form method="POST" action="">
-          {{ form.hidden_tag() }}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">Create Project</legend>
               <div class="form-group">
@@ -28,7 +24,7 @@
                   {% if form.name.errors %}
                       {{ form.name(class="form-control form-control-lg is-invalid") }}
                       <div class="invalid-feedback">
-                          {% for projecterror in form.name.errors %}
+                          {% for error in form.name.errors %}
                               <span>{{ error }}</span>
                           {% endfor %}
                       </div>
@@ -74,16 +70,16 @@
     </tr>
 </thead>
 
-{% for project in projects%}
+{% for client in project.client%}
 <tr class='clickable-row' data-href="{{url_for('project.project_details',project_id=project.id)}}" title="Click to edit project">    
   <th scope="row">
-    {{project.name}}
+    {{client.name}}
   </th>
   <td>
-    {{project.description}}
+    {{client.description}}
   </td>
   <td>
-    {{project.created_date.date()}}
+    {{client.created_date.date()}}
   </td>
 </tr>
 
@@ -103,5 +99,3 @@
     });
   });
 </script>
-
-{% endblock content %}

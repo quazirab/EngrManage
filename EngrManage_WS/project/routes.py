@@ -1,6 +1,6 @@
 from flask import render_template,url_for,flash,redirect,request,Blueprint
-from EngrManage_WS.project.forms import ProjectFrom
-from EngrManage_WS.models import Project,User
+from EngrManage_WS.project.forms import ProjectFrom,ClientForm
+from EngrManage_WS.models import Project,User,Client
 from flask_login import login_user,current_user,logout_user,login_required
 from EngrManage_WS.special_functions import login_role_required
 from EngrManage_WS import db
@@ -12,9 +12,8 @@ logger = logging.getLogger(__name__)
 project_blueprint = Blueprint('project', __name__,template_folder='templates')
 
 @project_blueprint.route("/project",methods=['GET','POST'])
-@login_role_required(roles=['Admin','User'])
-def project():
-    
+@login_role_required(roles=['Client','User'])
+def project():    
     form = ProjectFrom()
     if form.validate_on_submit():
         new_project = Project(created_by=current_user.id, name=form.name.data, description=form.description.data)
@@ -40,4 +39,11 @@ def project_creator():
 def project_details(project_id):
     project = Project.query.filter_by(id=project_id).first()
     creator = User.query.filter_by(id=project.created_by).first()
-    return render_template('project/projectdetails.html',project=project, creator=creator, title=project.name)
+    client_form = ClientForm()
+    if client_form.validate_on_submit():
+        new_client = Client(created_by=current_user.id, name=client_form.name.data, description=client_form.description.data)
+        print(new_client)
+        project.clients.append(new_client)
+        db.session.commit()
+        return redirect(url_for('project.project'))
+    return render_template('project/projectdetails.html',project=project, creator=creator, title=project.name,form=client_form)
